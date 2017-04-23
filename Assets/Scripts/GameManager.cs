@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public MyPathNode[,] grid;
     public GameObject gridBox;
@@ -14,10 +15,17 @@ public class GameManager : MonoBehaviour {
     public static string distanceType;
 
     public static int distance = 2;
+    public GameObject precious;
+    public GameObject spawner;
+
+    GameObject player;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         bakeObstacles();
+        InitializePlayer();
+        AddSpawners();
     }
 
     public void createGrid()
@@ -72,5 +80,97 @@ public class GameManager : MonoBehaviour {
     public void removeWall(int x, int y)
     {
         grid[x, y].IsWall = false;
+    }
+
+    //removes gameobjects in an area
+    void CleanNear(int x, int y)
+    {
+        for (int i = x - 2; i <= x + 2; i++)
+        {
+            for (int j = y - 2; j <= y + 2; j++)
+            {
+                foreach (Transform t in map.transform)
+                {
+                    if (t.name.Equals(i + "," + j))
+                    {
+                        GameObject wallAux = t.gameObject.GetComponent<BasicPlatformController>().wall;
+
+                        //removes all objects in this area
+                        var children = new List<GameObject>();
+                        foreach (Transform child in t.gameObject.transform)
+                        {
+                            if (!child.gameObject.tag.Equals("MapWall"))
+                            {
+                                children.Add(child.gameObject);
+                            }
+                        }
+
+                        children.ForEach(child => Destroy(child));
+
+                        //restores the wall
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    void AddSpawners()
+    {
+        GameObject mySpawner = Instantiate(spawner) as GameObject;
+        int X = Random.Range(0, gridWidth);
+        int Y = Random.Range(0, 5);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        CleanNear(X, Y);
+
+        mySpawner = Instantiate(spawner) as GameObject;
+        X = Random.Range(gridWidth - 5, gridWidth);
+        Y = Random.Range(0, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        CleanNear(X, Y);
+
+        mySpawner = Instantiate(spawner) as GameObject;
+        X = Random.Range(0, gridWidth);
+        Y = Random.Range(gridHeight - 5, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        CleanNear(X, Y);
+
+        mySpawner = Instantiate(spawner) as GameObject;
+        X = Random.Range(0, 5);
+        Y = Random.Range(0, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        CleanNear(X, Y);
+    }
+
+    void InitializePlayer()
+    {
+        new System.Random(map.GetComponent<MapTerrainGenerator>().seed);
+        int X = gridWidth / 2;
+        int Y = gridHeight / 2;
+        player.transform.localPosition = new Vector3(X, 2.0f, Y);
+        GameObject myPrecious = Instantiate(precious) as GameObject;
+        myPrecious.transform.localPosition = new Vector3(X + 1, 1.0f, Y + 1);
+        for (int i = X - 2; i <= X + 2; i++)
+        {
+            for (int j = Y - 2; j <= Y + 2; j++)
+            {
+                foreach (Transform t in map.transform)
+                {
+                    if (t.name.Equals(i + "," + j))
+                    {
+                        
+                            t.gameObject.GetComponent<BasicPlatformController>().wall.SetActive(false);
+                            t.gameObject.GetComponent<BasicPlatformController>().activated = true;
+                            t.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+                        //removes all objects in this area
+                        var children = new List<GameObject>();
+                        foreach (Transform child in t.gameObject.transform) children.Add(child.gameObject);
+                        children.ForEach(child => Destroy(child));
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

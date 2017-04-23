@@ -33,6 +33,9 @@ public class NpcMovement : MonoBehaviour {
 
     IEnumerable<MyPathNode> currentPath;
 
+    GameObject precious;
+    GameObject player;
+
     public enum actionType
     {
         walk,
@@ -93,7 +96,12 @@ public class NpcMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        player = GameObject.FindGameObjectWithTag("Player");
+        precious = GameObject.FindGameObjectWithTag("Precious");
+        if (precious)
+        {
+            myActions[0].pos = precious.transform.position;
+        }
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
@@ -124,6 +132,15 @@ public class NpcMovement : MonoBehaviour {
 
     void Update()
     {
+        if (precious == null)
+        {
+            precious = GameObject.FindGameObjectWithTag("Precious");
+            myActions[0].pos = precious.transform.position;
+        }
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
         if (currentAction == myActions.Count)
         {
             currentAction = 0;
@@ -132,11 +149,9 @@ public class NpcMovement : MonoBehaviour {
         {
             if (isWaiting == true)
             {
-                Debug.Log("it is really waiting :P");
                 currentStayTime += Time.deltaTime;
                 if (currentStayTime >= myActions[currentAction].wait)
                 {
-                    Debug.Log("Fucked up!!!");
                     //After player moves to endGridPosition he waits X seconds before starting next action
                     currentAction++;
 
@@ -159,7 +174,6 @@ public class NpcMovement : MonoBehaviour {
             {
                 isWaiting = true;
                 currentAction++;
-                Debug.Log("waiting true!!!");
                 configuredWalking = false;
                 StopAllCoroutines();
             }
@@ -228,22 +242,29 @@ public class NpcMovement : MonoBehaviour {
 	void getNextMovement()
 	{
         updatePath();
-		
-		input.x = 0;
-		input.y = 0;
-		if (nextNode.X > currentGridPosition.x) {
-			input.x = 1;
-		}
-        if (nextNode.Y > currentGridPosition.y) {
-			input.y = 1;
+
+        if (nextNode != null)
+        {
+            input.x = 0;
+            input.y = 0;
+            if (nextNode.X > currentGridPosition.x)
+            {
+                input.x = 1;
+            }
+            if (nextNode.Y > currentGridPosition.y)
+            {
+                input.y = 1;
+            }
+            if (nextNode.Y < currentGridPosition.y)
+            {
+                input.y = -1;
+            }
+            if (nextNode.X < currentGridPosition.x)
+            {
+                input.x = -1;
+            }
+            StartCoroutine(move());
         }
-		if (nextNode.Y < currentGridPosition.y) {
-			input.y = -1;
-        }
-		if (nextNode.X < currentGridPosition.x) {
-			input.x = -1;
-        }
-		StartCoroutine (move ());
 	}
 
     public Vector3 getGridPosition(int x, int y)

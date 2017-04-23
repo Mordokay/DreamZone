@@ -7,11 +7,10 @@ public class BasicPlatformController : MonoBehaviour {
     public bool activated;
     public GameObject wall;
 
-	void Start () {
+    public Color original;
+
+    public void RevertToOriginal()
+    {
+        this.GetComponent<Renderer>().material.color = original;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
