@@ -21,12 +21,26 @@ public class GameManager : MonoBehaviour
 
     GameObject player;
 
+
     void Start()
     {
+        MuteSound(true);
         player = GameObject.FindGameObjectWithTag("Player");
         bakeObstacles();
         InitializePlayer();
         AddSpawners();
+    }
+
+    public void MuteSound(bool mute)
+    {
+        if (mute)
+        {
+            AudioListener.volume = 0;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+        }
     }
 
     public void createGrid()
@@ -94,8 +108,6 @@ public class GameManager : MonoBehaviour
                 {
                     if (t.name.Equals(i + "," + j))
                     {
-                        GameObject wallAux = t.gameObject.GetComponent<BasicPlatformController>().wall;
-
                         //removes all objects in this area
                         var children = new List<GameObject>();
                         foreach (Transform child in t.gameObject.transform)
@@ -188,10 +200,6 @@ public class GameManager : MonoBehaviour
                     if (t.name.Equals(i + "," + j))
                     {
                         
-                            t.gameObject.GetComponent<BasicPlatformController>().wall.SetActive(false);
-                            t.gameObject.GetComponent<BasicPlatformController>().activated = true;
-                            t.gameObject.GetComponent<MeshRenderer>().enabled = true;
-
                         //removes all objects in this area
                         var children = new List<GameObject>();
                         foreach (Transform child in t.gameObject.transform) children.Add(child.gameObject);

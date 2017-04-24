@@ -18,7 +18,6 @@ public class BulletController : MonoBehaviour {
 	}
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.tag.Equals("Shadow"))
         {
             Debug.Log("hit A Shadow!!!");

@@ -82,7 +82,6 @@ public class MapTerrainGenerator : MonoBehaviour {
 
             //put shades of brown instead
             gridBox.gameObject.GetComponent<Renderer>().material.color = new Color((40 + 100 * greyColor) / 255.0f, (30 + 70 * greyColor) / 255.0f, (10 + 10 * greyColor) / 255.0f);
-            gridBox.gameObject.GetComponent<BasicPlatformController>().original = gridBox.gameObject.GetComponent<Renderer>().material.color;
             foreach (NoiseElement el in myItems)
             {
                 //Instanciate  object
@@ -92,13 +91,6 @@ public class MapTerrainGenerator : MonoBehaviour {
                     myObj.transform.position = gridBox.transform.position;
                     myObj.transform.Translate(Vector3.up * el.upShift);
                     gridBox.GetComponent<GridBox>().AddObjToGrid(myObj);
-
-
-                    //Hides objects from the user if map tile is not unlocked
-                    if (!gridBox.GetComponent<BasicPlatformController>().activated && hideObjects)
-                    {
-                        gridBox.GetComponent<GridBox>().HideObjects();
-                    }
 
                     if (!el.isWalkable)
                     {

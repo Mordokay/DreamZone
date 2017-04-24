@@ -33,7 +33,7 @@ public class NpcMovement : MonoBehaviour {
 
     IEnumerable<MyPathNode> currentPath;
 
-    GameObject precious;
+    GameObject ancient;
     GameObject player;
 
     public bool atackPlayer;
@@ -43,6 +43,10 @@ public class NpcMovement : MonoBehaviour {
         walk,
         stay
     };
+
+    public float atackInterval;
+    float timeSinceLastAtack;
+
 
     [Serializable]
     public class Action
@@ -99,10 +103,10 @@ public class NpcMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        precious = GameObject.FindGameObjectWithTag("Precious");
-        if (precious)
+        ancient = GameObject.FindGameObjectWithTag("Precious");
+        if (ancient)
         {
-            myActions[0].pos = precious.transform.position;
+            myActions[0].pos = ancient.transform.position;
         }
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
@@ -132,18 +136,27 @@ public class NpcMovement : MonoBehaviour {
 		
 	}
 
+    void AtackAncient()
+    {
+        if(timeSinceLastAtack > atackInterval)
+        {
+            timeSinceLastAtack = 0.0f;
+            ancient.GetComponent<AncientOneController>().LoseLife(10);
+        }
+    }
+
     void Update()
     {
+        timeSinceLastAtack += Time.deltaTime;
 
-        if (precious == null)
+        if (ancient == null)
         {
-            precious = GameObject.FindGameObjectWithTag("Precious");
-            myActions[0].pos = precious.transform.position;
+            ancient = GameObject.FindGameObjectWithTag("Precious");
+            myActions[0].pos = ancient.transform.position;
         }
-        if(precious.transform.position.x == this.transform.position.x && precious.transform.position.z == this.transform.position.z)
+        if(ancient.transform.position.x == this.transform.position.x && ancient.transform.position.z == this.transform.position.z)
         {
-            Debug.Log("Got it!!!!");
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<UIManager>().GameOver();
+            AtackAncient();
         }
 
         if(player == null)

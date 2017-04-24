@@ -15,7 +15,7 @@ public class UFOBulletController : MonoBehaviour {
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            gm.GetComponent<UIManager>().GameOver();
+            collision.gameObject.GetComponent<PlayerStats>().LoseLife(5);
             Destroy(this.gameObject);
         }
     }

@@ -12,6 +12,8 @@ public class TreeController : MonoBehaviour {
 
     public GameObject logs;
 
+    public Transform logSpawnPos;
+
     void Start () {
         timeBroken = 0.0f;
     }
@@ -23,7 +25,7 @@ public class TreeController : MonoBehaviour {
         this.GetComponent<MeshRenderer>().enabled = false;
         broken = true;
         GameObject myLogs = Instantiate(logs);
-        myLogs.transform.position = this.transform.position;
+        myLogs.transform.position = logSpawnPos.position;
     }
 
     public void RestoreTree()

@@ -38,7 +38,7 @@ public class Item : MonoBehaviour {
                     collision.gameObject.GetComponent<PlayerStats>().wood += quantity;
                     break;
                 case itemType.dreamJuice:
-                    collision.gameObject.GetComponent<PlayerStats>().dreamJuice += quantity;
+                    collision.gameObject.GetComponent<PlayerStats>().dreamSpark += quantity;
                     break;
                 case itemType.constructionPaste:
                     collision.gameObject.GetComponent<PlayerStats>().constructionPaste += quantity;

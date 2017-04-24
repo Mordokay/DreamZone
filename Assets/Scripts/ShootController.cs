@@ -46,7 +46,7 @@ public class ShootController : MonoBehaviour {
                 myBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * bulletSpeed);
                 Destroy(myBullet, 4.0f);
             }
-
+            player.GetComponent<PlayerStats>().dreamSpark -= 5;
         }
     }
 }

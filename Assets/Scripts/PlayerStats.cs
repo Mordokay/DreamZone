@@ -4,25 +4,99 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
-    //Goes from 0 to 1000
-    public int wood;
-    //Goes from 0 to 500
+    public int wood;    
     public int constructionPaste;
-    //Goes from 0 to 100
-    public int dreamJuice;
+    public int dreamSpark;
+    public float health;
 
-    public int health;
+    public int maxWood = 1000;
+    public int maxConstructionPaste = 500;
+    public int maxDreamSpark = 200;
+    public float maxHealth = 100;
+
+    public float healthIncreaseRatio;
+
+    GameObject gm;
+
+    public SliderController sliderController;
+
+    //Every X seconds player gains resources;
+    public float refilTime;
+    public float timeSinceLastRefill;
 
 	void Start () {
-        wood = 200;
-        dreamJuice = 50;
+        gm = GameObject.FindGameObjectWithTag("GameManager");
+
+        wood = 500;
         constructionPaste = 200;
+        dreamSpark = 100;
+
+        health = 100.0f;
+
+        timeSinceLastRefill = 0.0f;
     }
-	
+
+    public void UpdateSliders()
+    {
+        sliderController.UpdateBars();
+    }
+
+    private void Update()
+    {
+        ClampItems();
+
+        if (health < 100)
+        {
+            health += Time.deltaTime * healthIncreaseRatio;
+        }
+
+        timeSinceLastRefill += Time.deltaTime;
+
+        if(timeSinceLastRefill > refilTime)
+        {
+            wood += 5;
+            constructionPaste += 2;
+            dreamSpark += 1;
+
+            UpdateSliders();
+
+            timeSinceLastRefill = 0.0f;
+        }
+    }
+
+    public void LoseLife(int life)
+    {
+        this.health -= life;
+        if(health < 0.0f)
+        {
+            gm.GetComponent<UIManager>().GameOver();
+        }
+    }
+
     public void ClampItems()
     {
-        Mathf.Clamp(this.wood, 0, 1000);
-        Mathf.Clamp(this.constructionPaste, 0, 500);
-        Mathf.Clamp(this.dreamJuice, 0, 100);
+        this.wood = Mathf.Clamp(this.wood, 0, maxWood);
+        this.constructionPaste = Mathf.Clamp(this.constructionPaste, 0, maxConstructionPaste);
+        this.dreamSpark = Mathf.Clamp(this.dreamSpark, 0, maxDreamSpark);
+        this.health = Mathf.Clamp(this.health, 0, maxHealth);
+
+        UpdateSliders();
+    }
+
+    //Turret functions
+    public bool CanPlaceTurret()
+    {
+        return (constructionPaste >= 25 && wood >= 100 && dreamSpark >= 5);
+    }
+    public void PlaceTurret()
+    {
+        constructionPaste -= 25;
+        wood -= 100;
+        dreamSpark -= 5;
+    }
+
+    public void RemoveWood(int x)
+    {
+        this.wood -= x;
     }
 }
