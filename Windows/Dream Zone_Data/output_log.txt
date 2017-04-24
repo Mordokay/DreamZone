@@ -1,0 +1,142 @@
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon R9 200 / HD 7900 Series (ID=0x6798)
+    Vendor:   ATI
+    VRAM:     3050 MB
+    Driver:   21.19.407.0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.050 seconds
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Mordokay\Desktop\DreamZone\Windows\Dream Zone_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 59Hz; virtual: 3840x1080 at -1920,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.948637 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2118 -> priority: 1 
+  Thread -> id: 35cc -> priority: 1 
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.850578 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 19964.
+Total: 3.438663 ms (FindLiveObjects: 1.188130 ms CreateObjectMapping: 0.388556 ms MarkObjects: 1.829597 ms  DeleteObjects: 0.031796 ms)
+
+UFOBullet(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO Bullet!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UFO(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Tree(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit something else
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Tree(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit something else
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Tree(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit something else
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Tree(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit something else
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UFO(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Precious(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit something else
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Shadow(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+hit A Shadow!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UFO(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UFOBullet(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO Bullet!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UFO(Clone)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Hit a UFO!!!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 15.291959 ms
+
+Unloading 2274 unused Assets to reduce memory usage. Loaded Objects now: 410.
+Total: 3.361360 ms (FindLiveObjects: 0.200403 ms CreateObjectMapping: 0.129518 ms MarkObjects: 0.166565 ms  DeleteObjects: 2.864288 ms)
+

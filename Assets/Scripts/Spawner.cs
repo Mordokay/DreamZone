@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
-    public GameObject Shadow;
+    public GameObject objToSpwn;
     public float timeBetweenSpawns;
 
     public float currentTime;
+
+    public Transform spawnPos;
 
 	void Start () {
         currentTime = 0.0f;	
@@ -19,8 +21,8 @@ public class Spawner : MonoBehaviour {
         {
             currentTime = 0.0f;
             //Spawn the shadow
-            GameObject myShadow = Instantiate(Shadow) as GameObject;
-            myShadow.transform.position = this.transform.position;
+            GameObject myObjToSpwn = Instantiate(objToSpwn) as GameObject;
+            myObjToSpwn.transform.position = spawnPos.position;
         }
 	}
 }

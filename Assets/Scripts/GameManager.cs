@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static int distance = 2;
     public GameObject precious;
     public GameObject spawner;
+    public GameObject UFOSpawner;
 
     GameObject player;
 
@@ -117,6 +118,8 @@ public class GameManager : MonoBehaviour
 
     void AddSpawners()
     {
+        //UFOSpawner
+
         GameObject mySpawner = Instantiate(spawner) as GameObject;
         int X = Random.Range(0, gridWidth);
         int Y = Random.Range(0, 5);
@@ -140,6 +143,32 @@ public class GameManager : MonoBehaviour
         Y = Random.Range(0, gridHeight);
         mySpawner.transform.position = new Vector3(X, 0.5f, Y);
         CleanNear(X, Y);
+
+        //Create UFO Spawners (they dont neet to clean an area near then):
+
+        mySpawner = Instantiate(UFOSpawner) as GameObject;
+        X = Random.Range(0, gridWidth);
+        Y = Random.Range(0, 5);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        //CleanNear(X, Y);
+
+        mySpawner = Instantiate(UFOSpawner) as GameObject;
+        X = Random.Range(gridWidth - 5, gridWidth);
+        Y = Random.Range(0, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        //CleanNear(X, Y);
+
+        mySpawner = Instantiate(UFOSpawner) as GameObject;
+        X = Random.Range(0, gridWidth);
+        Y = Random.Range(gridHeight - 5, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        //CleanNear(X, Y);
+
+        mySpawner = Instantiate(UFOSpawner) as GameObject;
+        X = Random.Range(0, 5);
+        Y = Random.Range(0, gridHeight);
+        mySpawner.transform.position = new Vector3(X, 0.5f, Y);
+        //CleanNear(X, Y);
     }
 
     void InitializePlayer()

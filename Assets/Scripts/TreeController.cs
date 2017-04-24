@@ -8,7 +8,9 @@ public class TreeController : MonoBehaviour {
 
     public bool broken;
     public float timeToRestore;
-    float timeBroken;
+    public float timeBroken;
+
+    public GameObject logs;
 
     void Start () {
         timeBroken = 0.0f;
@@ -20,13 +22,15 @@ public class TreeController : MonoBehaviour {
         brokenTree.SetActive(true);
         this.GetComponent<MeshRenderer>().enabled = false;
         broken = true;
+        GameObject myLogs = Instantiate(logs);
+        myLogs.transform.position = this.transform.position;
     }
 
     public void RestoreTree()
     {
-        this.GetComponent<BoxCollider>().enabled = false;
-        brokenTree.SetActive(true);
-        this.GetComponent<MeshRenderer>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = true;
+        brokenTree.SetActive(false);
+        this.GetComponent<MeshRenderer>().enabled = true;
         broken = false;
     }
 

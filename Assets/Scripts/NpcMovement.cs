@@ -36,6 +36,8 @@ public class NpcMovement : MonoBehaviour {
     GameObject precious;
     GameObject player;
 
+    public bool atackPlayer;
+
     public enum actionType
     {
         walk,
@@ -132,11 +134,18 @@ public class NpcMovement : MonoBehaviour {
 
     void Update()
     {
+
         if (precious == null)
         {
             precious = GameObject.FindGameObjectWithTag("Precious");
             myActions[0].pos = precious.transform.position;
         }
+        if(precious.transform.position.x == this.transform.position.x && precious.transform.position.z == this.transform.position.z)
+        {
+            Debug.Log("Got it!!!!");
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<UIManager>().GameOver();
+        }
+
         if(player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");

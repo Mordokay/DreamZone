@@ -59,6 +59,7 @@ public class MapTerrainGenerator : MonoBehaviour {
 
     void Start()
     {
+        seed = PlayerPrefs.GetInt("seed");
         CreateHeight();
     }
 
@@ -78,8 +79,10 @@ public class MapTerrainGenerator : MonoBehaviour {
         {
             string[] entries = gridBox.gameObject.name.Split(',');
             float greyColor = noiseMap[int.Parse(entries[0]), int.Parse(entries[1])];
-            gridBox.gameObject.GetComponent<Renderer>().material.color = new Color(greyColor, greyColor, greyColor);
-            gridBox.gameObject.GetComponent<BasicPlatformController>().original = new Color(greyColor, greyColor, greyColor);
+
+            //put shades of brown instead
+            gridBox.gameObject.GetComponent<Renderer>().material.color = new Color((40 + 100 * greyColor) / 255.0f, (30 + 70 * greyColor) / 255.0f, (10 + 10 * greyColor) / 255.0f);
+            gridBox.gameObject.GetComponent<BasicPlatformController>().original = gridBox.gameObject.GetComponent<Renderer>().material.color;
             foreach (NoiseElement el in myItems)
             {
                 //Instanciate  object

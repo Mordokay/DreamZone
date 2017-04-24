@@ -61,6 +61,8 @@ public class PlayerShoot : MonoBehaviour {
 
                         //Shows hidden onjects
                         lastObjectHit.GetComponent<GridBox>().ShowObjects();
+
+                        this.GetComponent<PlayerSoundManager>().PlayUnlockTileSound();
                     }
                 }
             }
@@ -71,14 +73,13 @@ public class PlayerShoot : MonoBehaviour {
                     lastObjectHit.GetComponent<TreeController>().BreakTree();
                 }
             }
-        }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            GameObject myBullet = Instantiate(bullet) as GameObject;
-            myBullet.transform.position = bulletPos.position;
-            myBullet.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * bulletSpeed);
-            Destroy(myBullet, 4.0f);
+            else if (lastObjectHit.tag.Equals("PasteMine") && !lastObjectHit.GetComponent<PasteMineController>().harvested)
+            {
+                if (Input.GetButtonDown("Fire2"))
+                {
+                    lastObjectHit.GetComponent<PasteMineController>().HarvestMine();
+                }
+            }
         }
     }
 }

@@ -14,11 +14,34 @@ public class ShadowEnemy : MonoBehaviour {
 
     public GameObject body;
 
+    public GameObject dreamJuice;
+
+    GameObject gm;
+
     void Start()
     {
+        gm = GameObject.FindGameObjectWithTag("GameManager");
         goingUp = true;
         currentAlpha = minAlpha;
     }
+
+    public void DropDreamJuice()
+    {
+        GameObject myJuice = Instantiate(dreamJuice);
+        myJuice.transform.position = this.transform.position;
+        Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Precious"))
+        {
+            Debug.Log("Ancient collision!!! " );
+            //game ends
+            gm.GetComponent<UIManager>().GameOver();
+        }
+    }
+
     void Update () {
 
         if (goingUp)
