@@ -19,6 +19,8 @@ public class PlayerInteraction : MonoBehaviour {
 
     public GameObject temporaryPlacementObject;
 
+    public GameObject ancientFeedback;
+
     public enum Tool
     {
         None,
@@ -34,6 +36,18 @@ public class PlayerInteraction : MonoBehaviour {
     public LayerMask raycastLayers;
     public GameManager gm;
 
+    public GameObject ancientOne;
+
+    public void ShowFeedback()
+    {
+        ancientFeedback.SetActive(true);
+        ancientFeedback.GetComponent<TextMesh>().text = "Health: " + ancientOne.GetComponent<AncientOneController>().health + "/1000" + "\n" +
+            "Shield: " + ancientOne.GetComponent<AncientOneController>().shieldHealth + "/500";
+    }
+    public void HideFeedback()
+    {
+        ancientFeedback.SetActive(false);
+    }
 
     void Start()
     {
@@ -255,20 +269,25 @@ public class PlayerInteraction : MonoBehaviour {
                         hit.transform.gameObject.GetComponent<CraterController>().RemoveCrater();
                     }
                 }
-                else if (hit.transform.gameObject.tag.Equals("Precious") && currentTool.Equals(Tool.AncientShield) &&
-                    this.GetComponent<PlayerStats>().CanPlaceShield())
+                else if (hit.transform.gameObject.tag.Equals("Precious") )
                 {
-                    if (Input.GetButtonDown("Fire2"))
+                    ancientOne = hit.transform.gameObject;
+                    ShowFeedback();
+                    if (currentTool.Equals(Tool.AncientShield) && this.GetComponent<PlayerStats>().CanPlaceShield())
                     {
-                        hit.transform.gameObject.GetComponent<AncientOneController>().EnableShield();
-                        this.GetComponent<PlayerStats>().PlaceShield();
-                        Debug.Log("Put a shield on the ancient one!!!");
+                        if (Input.GetButtonDown("Fire2"))
+                        {
+                            hit.transform.gameObject.GetComponent<AncientOneController>().EnableShield();
+                            this.GetComponent<PlayerStats>().PlaceShield();
+                            Debug.Log("Put a shield on the ancient one!!!");
+                        }
                     }
                 }
             }
         }
         else
         {
+            HideFeedback();
             Destroy(temporaryPlacementObject);
         }
     }

@@ -14,7 +14,15 @@ public class AncientOneController : MonoBehaviour {
 
     void Start () {
         gm = GameObject.FindGameObjectWithTag("GameManager");
-	}
+    }
+
+    void Update()
+    {
+        if(shieldHealth < 0)
+        {
+            shieldHealth = 0;
+        }
+    }
 
     public void EnableShield()
     {

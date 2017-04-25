@@ -27,7 +27,8 @@ public class Item : MonoBehaviour {
 	void Update () {
         this.transform.Rotate(Vector3.one * rotationSpeed);
 
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveToPlayerSpeed);
+        if(Vector3.Distance(this.transform.position, player.transform.position) < 3.0f)
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveToPlayerSpeed);
 
     }
     private void OnTriggerEnter (Collider collision)
