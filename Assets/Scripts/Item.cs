@@ -27,7 +27,7 @@ public class Item : MonoBehaviour {
 	void Update () {
         this.transform.Rotate(Vector3.one * rotationSpeed);
 
-        if(Vector3.Distance(this.transform.position, player.transform.position) < 3.0f)
+        if(Vector3.Distance(this.transform.position, player.transform.position) < 6.0f)
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * moveToPlayerSpeed);
 
     }

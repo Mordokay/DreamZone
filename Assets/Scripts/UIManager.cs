@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour {
 
     GameObject player;
 
+    public Sprite soundOnSprite;
+    public Sprite soundOfSprite;
+    public GameObject muteSprite;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -26,8 +30,21 @@ public class UIManager : MonoBehaviour {
         pausedGame = false;
     }
 	
-	// Update is called once per frame
-	void Update () {
+    public void ToggleMute()
+    {
+        if(AudioListener.volume == 0)
+        {
+            AudioListener.volume = 1.0f;
+            muteSprite.GetComponent<Image>().sprite = soundOnSprite;
+        }
+        else
+        {
+            AudioListener.volume = 0;
+            muteSprite.GetComponent<Image>().sprite = soundOfSprite;
+        } 
+    }
+   
+    void Update () {
         if (pausedGame || onMenu || gameOver)
         {
             Time.timeScale = 0;
