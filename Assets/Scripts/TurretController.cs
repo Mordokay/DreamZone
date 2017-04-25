@@ -21,7 +21,11 @@ public class TurretController : MonoBehaviour {
 
     GameObject player;
 
+    public int bulletCount;
+
 	void Start () {
+
+        bulletCount = 15;
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         timeSinceLastShoot = 0.0f;
@@ -55,6 +59,8 @@ public class TurretController : MonoBehaviour {
 
                 myBullet.GetComponent<Rigidbody>().AddForce(bulletDirection.normalized * bulletVelocity);
                 timeSinceLastShoot = 0.0f;
+
+                bulletCount -= 1;
             }
         }
         else
@@ -64,6 +70,10 @@ public class TurretController : MonoBehaviour {
     }
 
 	void Update () {
+        if(bulletCount <= 0)
+        {
+            Destroy(this.transform.parent.gameObject);
+        }
         if (nearestEnemy)
         {
             this.transform.LookAt(nearestEnemy.transform);
