@@ -145,6 +145,26 @@ public class NpcMovement : MonoBehaviour {
         }
     }
 
+    void CheckTraps()
+    {
+        foreach(GameObject trap in gameManager.allTraps)
+        {
+            if (trap != null)
+            {
+                if (trap.transform.position.x == this.transform.position.x && trap.transform.position.z == this.transform.position.z)
+                {
+                    Destroy(trap.gameObject);
+                    gameManager.CleanTrapsList();
+
+                    this.GetComponent<ShadowEnemy>().DropDreamJuice();
+                    Destroy(this.gameObject);
+                    break;
+                }
+            }
+        }
+        
+    }
+
     void Update()
     {
         timeSinceLastAtack += Time.deltaTime;
@@ -158,8 +178,8 @@ public class NpcMovement : MonoBehaviour {
         {
             AtackAncient();
         }
-
-        if(player == null)
+        CheckTraps();
+        if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
@@ -188,6 +208,7 @@ public class NpcMovement : MonoBehaviour {
 
                 startGridPosition = new gridPosition((int)this.transform.position.x, (int)this.transform.position.z);
                 endGridPosition = new gridPosition((int)myActions[currentAction].pos.x, (int)myActions[currentAction].pos.z);
+                //CheckTraps();
                 initializePosition();
                 updatePath();
                 getNextMovement();

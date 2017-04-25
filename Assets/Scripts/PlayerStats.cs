@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -8,6 +9,12 @@ public class PlayerStats : MonoBehaviour {
     public int constructionPaste;
     public int dreamSpark;
     public float health;
+
+    public int score;
+    public int highscore;
+
+    public Text scoreText;
+    public Text highscoreText;
 
     public int maxWood = 1000;
     public int maxConstructionPaste = 500;
@@ -25,6 +32,10 @@ public class PlayerStats : MonoBehaviour {
     public float timeSinceLastRefill;
 
 	void Start () {
+        score = 0;
+        highscore = PlayerPrefs.GetInt("highscore");
+        highscoreText.text = "HIGHSCORE: " + highscore;
+
         gm = GameObject.FindGameObjectWithTag("GameManager");
 
         wood = 500;
@@ -45,9 +56,20 @@ public class PlayerStats : MonoBehaviour {
     {
         ClampItems();
 
+        scoreText.text = "SCORE: " + score;
+        if(score > highscore)
+        {
+            highscore = score;
+            highscoreText.text = "HIGHSCORE: " + highscore;
+        }
         if (health < 100)
         {
             health += Time.deltaTime * healthIncreaseRatio;
+        }
+
+        if (health <= 0)
+        {
+            gm.GetComponent<UIManager>().GameOver();
         }
 
         timeSinceLastRefill += Time.deltaTime;
@@ -86,13 +108,36 @@ public class PlayerStats : MonoBehaviour {
     //Turret functions
     public bool CanPlaceTurret()
     {
-        return (constructionPaste >= 25 && wood >= 100 && dreamSpark >= 5);
+        return (constructionPaste >= 50 && wood >= 300 && dreamSpark >= 5);
     }
     public void PlaceTurret()
     {
         constructionPaste -= 25;
         wood -= 100;
         dreamSpark -= 5;
+    }
+
+    //Turret functions
+    public bool CanPlaceTrap()
+    {
+        return (constructionPaste >= 10 && wood >= 50);
+    }
+    public void PlaceTrap()
+    {
+        constructionPaste -= 10;
+        wood -= 50;
+    }
+
+    //Ancient Shield functions
+    public bool CanPlaceShield()
+    {
+        return (constructionPaste >= 250 && wood >= 300 && dreamSpark > 50);
+    }
+    public void PlaceShield()
+    {
+        constructionPaste -= 250;
+        wood -= 300;
+        dreamSpark -= 50;
     }
 
     public void RemoveWood(int x)

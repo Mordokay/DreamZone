@@ -25,7 +25,7 @@ public class SliderController : MonoBehaviour {
 	
 	public void UpdateBars()
     {
-        healthSliderText.text = "Health " + stats.health + "/" + stats.maxHealth;
+        healthSliderText.text = "Health " + (int)stats.health + "/" + (int)stats.maxHealth;
         woodSliderText.text = "Wood " + stats.wood + "/" + stats.maxWood;
         dreamSparkSliderText.text = "Spark " + stats.dreamSpark + "/" + stats.maxDreamSpark;
         constructionPasteSliderText.text = "Paste " + stats.constructionPaste + "/" + stats.maxConstructionPaste;

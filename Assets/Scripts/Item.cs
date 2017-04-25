@@ -12,7 +12,9 @@ public class Item : MonoBehaviour {
     {
         wood,
         dreamJuice,
-        constructionPaste
+        constructionPaste,
+        healthGlobe
+
     };
 
     public itemType type;
@@ -42,6 +44,9 @@ public class Item : MonoBehaviour {
                     break;
                 case itemType.constructionPaste:
                     collision.gameObject.GetComponent<PlayerStats>().constructionPaste += quantity;
+                    break;
+                case itemType.healthGlobe:
+                    collision.gameObject.GetComponent<PlayerStats>().health += quantity;
                     break;
             }
             collision.gameObject.GetComponent<PlayerSoundManager>().PlayPickSound();

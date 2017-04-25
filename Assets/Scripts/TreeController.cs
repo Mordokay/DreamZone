@@ -20,7 +20,8 @@ public class TreeController : MonoBehaviour {
 	
 	public void BreakTree()
     {
-        this.GetComponent<BoxCollider>().enabled = false;
+        this.GetComponents<BoxCollider>()[0].enabled = false;
+        this.GetComponents<BoxCollider>()[1].enabled = false;
         brokenTree.SetActive(true);
         this.GetComponent<MeshRenderer>().enabled = false;
         broken = true;
@@ -30,7 +31,8 @@ public class TreeController : MonoBehaviour {
 
     public void RestoreTree()
     {
-        this.GetComponent<BoxCollider>().enabled = true;
+        this.GetComponents<BoxCollider>()[0].enabled = true;
+        this.GetComponents<BoxCollider>()[1].enabled = true;
         brokenTree.SetActive(false);
         this.GetComponent<MeshRenderer>().enabled = true;
         broken = false;

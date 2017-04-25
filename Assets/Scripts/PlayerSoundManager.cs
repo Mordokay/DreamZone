@@ -7,6 +7,7 @@ public class PlayerSoundManager : MonoBehaviour {
     public AudioSource pickSound;
     public AudioSource shootSound;
     public AudioSource unlockTileSound;
+    public AudioSource outchSound;
 
     public void PlayPickSound()
     {
@@ -21,5 +22,9 @@ public class PlayerSoundManager : MonoBehaviour {
     public void PlayUnlockTileSound()
     {
         unlockTileSound.Play();
+    }
+    public void PlayOutchSound()
+    {
+        outchSound.Play();
     }
 }

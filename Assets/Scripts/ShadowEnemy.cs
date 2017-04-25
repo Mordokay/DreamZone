@@ -17,12 +17,17 @@ public class ShadowEnemy : MonoBehaviour {
     public GameObject dreamJuice;
 
     GameObject gm;
+    GameObject player;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         gm = GameObject.FindGameObjectWithTag("GameManager");
         goingUp = true;
         currentAlpha = minAlpha;
+
+        //TO make sure game doesnt become very slow .. destroys the shadow after 1 minute 30 seconds
+        Destroy(this.gameObject, 90.0f);
     }
 
     public void DropDreamJuice()
@@ -30,6 +35,8 @@ public class ShadowEnemy : MonoBehaviour {
         GameObject myJuice = Instantiate(dreamJuice);
         myJuice.transform.position = this.transform.position;
         Destroy(this.gameObject);
+
+        player.GetComponent<PlayerStats>().score += 10;
     }
 
     private void OnCollisionEnter(Collision collision)

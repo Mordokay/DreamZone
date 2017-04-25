@@ -15,8 +15,11 @@ public class UIManager : MonoBehaviour {
 
     public Text mySeed;
 
+    GameObject player;
+
     // Use this for initialization
     void Start () {
+        player = GameObject.FindGameObjectWithTag("Player");
         gameOver = false;
        if (!onMenu)
             pausePanel.SetActive(false);
@@ -75,6 +78,8 @@ public class UIManager : MonoBehaviour {
 
     public void GameOver()
     {
+        PlayerPrefs.SetInt("highscore", player.GetComponent<PlayerStats>().highscore);
+
         gameOverPanel.SetActive(true);
         gameOver = true;
     }

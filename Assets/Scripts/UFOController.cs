@@ -26,6 +26,8 @@ public class UFOController : MonoBehaviour {
         GameObject myJuice = Instantiate(dreamJuice);
         myJuice.transform.position = this.transform.position;
         Destroy(this.gameObject);
+
+        player.GetComponent<PlayerStats>().score += 20;
     }
 
     void Update()

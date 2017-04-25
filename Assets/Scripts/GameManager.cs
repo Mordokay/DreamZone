@@ -21,10 +21,31 @@ public class GameManager : MonoBehaviour
 
     GameObject player;
 
+    public List<GameObject> enemies;
+    public List<GameObject> allTraps;
+
+    public bool soundMuted;
+
+    public void CleanEnemiesList() {
+        for (var i = enemies.Count - 1; i > -1; i--)
+        {
+            if (enemies[i] == null)
+                enemies.RemoveAt(i);
+        }
+    }
+
+    public void CleanTrapsList()
+    {
+        for (var i = allTraps.Count - 1; i > -1; i--)
+        {
+            if (allTraps[i] == null)
+                allTraps.RemoveAt(i);
+        }
+    }
 
     void Start()
     {
-        MuteSound(true);
+        MuteSound(soundMuted);
         player = GameObject.FindGameObjectWithTag("Player");
         bakeObstacles();
         InitializePlayer();

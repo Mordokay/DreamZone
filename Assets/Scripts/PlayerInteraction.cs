@@ -13,6 +13,10 @@ public class PlayerInteraction : MonoBehaviour {
 
     public GameObject turretGreen;
     public GameObject turretNormal;
+
+    public GameObject trapGreen;
+    public GameObject trapNormal;
+
     public GameObject temporaryPlacementObject;
 
     public enum Tool
@@ -21,7 +25,6 @@ public class PlayerInteraction : MonoBehaviour {
         Turret,
         Trap,
         AncientShield,
-        SkyMachine
     };
 
     public Tool currentTool;
@@ -29,10 +32,13 @@ public class PlayerInteraction : MonoBehaviour {
     public List<GameObject> PlacementButonsUI;
 
     public LayerMask raycastLayers;
+    public GameManager gm;
+
 
     void Start()
     {
-        ActivateUI(0);
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        //ActivateUI(0);
         lastObjectHit = new GameObject();
     }
 
@@ -79,6 +85,18 @@ public class PlayerInteraction : MonoBehaviour {
                 {
                     PlacementButonsUI[1].GetComponent<Image>().color = Color.green;
                     currentTool = Tool.Trap;
+
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, 3.0f, raycastLayers))
+                    {
+                        if (hit.transform.gameObject.tag.Equals("Platform"))
+                        {
+                            GameObject myTrapGreen = Instantiate(trapGreen) as GameObject;
+                            myTrapGreen.transform.position = hit.transform.gameObject.transform.position - Vector3.right * 2;
+                            temporaryPlacementObject = myTrapGreen;
+                        }
+                    }
                 }
                 else
                 {
@@ -98,18 +116,6 @@ public class PlayerInteraction : MonoBehaviour {
                     currentTool = Tool.None;
                 }
                 break;
-            case 3:
-                if (!currentTool.Equals(Tool.SkyMachine))
-                {
-                    PlacementButonsUI[3].GetComponent<Image>().color = Color.green;
-                    currentTool = Tool.SkyMachine;
-                }
-                else
-                {
-                    Destroy(temporaryPlacementObject);
-                    currentTool = Tool.None;
-                }
-                break;
         }
     }
 
@@ -118,22 +124,20 @@ public class PlayerInteraction : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("Placing Turret");
+            Destroy(temporaryPlacementObject);
             ActivateUI(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Debug.Log("Placing Trap");
+            Destroy(temporaryPlacementObject);
             ActivateUI(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Debug.Log("Placing Ancient Shield");
+            Destroy(temporaryPlacementObject);
             ActivateUI(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Debug.Log("Placing SkyMachine");
-            ActivateUI(3);
         }
 
         RaycastHit hit;
@@ -145,10 +149,9 @@ public class PlayerInteraction : MonoBehaviour {
             {
                 switch (currentTool)
                 {
-                    case Tool.None:
-                        break;
                     case Tool.Turret:
-                        if (!lastObjectHit.gameObject.Equals(hit.transform.gameObject) && !hit.transform.gameObject.GetComponent<GridBox>().hasBuilding)
+                        if (!lastObjectHit.gameObject.Equals(hit.transform.gameObject) && !hit.transform.gameObject.GetComponent<GridBox>().hasBuilding
+                            && !hit.transform.gameObject.GetComponent<GridBox>().hasTrap)
                         {
                             if (temporaryPlacementObject != null)
                             {
@@ -161,10 +164,18 @@ public class PlayerInteraction : MonoBehaviour {
                         }
                         break;
                     case Tool.Trap:
-                        break;
-                    case Tool.AncientShield:
-                        break;
-                    case Tool.SkyMachine:
+                        if (!lastObjectHit.gameObject.Equals(hit.transform.gameObject) && !hit.transform.gameObject.GetComponent<GridBox>().hasBuilding 
+                            && !hit.transform.gameObject.GetComponent<GridBox>().hasTrap)
+                        {
+                            if (temporaryPlacementObject != null)
+                            {
+                                Destroy(temporaryPlacementObject);
+                            }
+
+                            GameObject myTrapGreen = Instantiate(trapGreen) as GameObject;
+                            myTrapGreen.transform.position = hit.transform.gameObject.transform.position;
+                            temporaryPlacementObject = myTrapGreen;
+                        }
                         break;
                 }
 
@@ -175,11 +186,10 @@ public class PlayerInteraction : MonoBehaviour {
                 {
                     switch (currentTool)
                     {
-                        case Tool.None:
-                            break;
                         case Tool.Turret:
-                            Debug.Log("Place!!!");
-                            if (temporaryPlacementObject && this.GetComponent<PlayerStats>().CanPlaceTurret() && !lastObjectHit.GetComponent<GridBox>().hasBuilding)
+                            Debug.Log("Place Turret!!!");
+                            if (temporaryPlacementObject && this.GetComponent<PlayerStats>().CanPlaceTurret() && !lastObjectHit.GetComponent<GridBox>().hasBuilding
+                            && !hit.transform.gameObject.GetComponent<GridBox>().hasTrap)
                             {
                                 lastObjectHit.GetComponent<GridBox>().hasBuilding = true;
 
@@ -188,33 +198,78 @@ public class PlayerInteraction : MonoBehaviour {
 
                                 GameObject myTurret = Instantiate(turretNormal) as GameObject;
                                 myTurret.transform.position = temporaryPlacementObject.transform.position;
+
+                                Destroy(temporaryPlacementObject);
                             }
 
                             break;
                         case Tool.Trap:
-                            break;
-                        case Tool.AncientShield:
-                            break;
-                        case Tool.SkyMachine:
+                            Debug.Log("Place Trap!!!");
+                            if (temporaryPlacementObject && this.GetComponent<PlayerStats>().CanPlaceTrap() && !lastObjectHit.GetComponent<GridBox>().hasBuilding
+                            && !hit.transform.gameObject.GetComponent<GridBox>().hasTrap)
+                            {
+                                lastObjectHit.GetComponent<GridBox>().hasTrap = true;
+
+                                this.GetComponent<PlayerStats>().PlaceTrap();
+                                this.GetComponent<PlayerSoundManager>().PlayUnlockTileSound();
+
+                                GameObject myTrap = Instantiate(trapNormal) as GameObject;
+                                myTrap.transform.position = temporaryPlacementObject.transform.position;
+
+                                Destroy(temporaryPlacementObject);
+
+                                gm.allTraps.Add(myTrap);
+                            }
                             break;
                     }
                 }
             }
-
-            else if (hit.transform.gameObject.tag.Equals("Tree") && !hit.transform.GetComponent<TreeController>().broken)
+            else
             {
-                if (Input.GetButtonDown("Fire2"))
+                Destroy(temporaryPlacementObject);
+                if (hit.transform.gameObject.tag.Equals("Tree") && !hit.transform.GetComponent<TreeController>().broken)
                 {
-                    hit.transform.gameObject.GetComponent<TreeController>().BreakTree();
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        hit.transform.gameObject.GetComponent<TreeController>().BreakTree();
+                    }
+                }
+                else if (hit.transform.gameObject.tag.Equals("PasteMine") && !hit.transform.gameObject.GetComponent<PasteMineController>().harvested)
+                {
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        hit.transform.gameObject.GetComponent<PasteMineController>().HarvestMine();
+                    }
+                }
+                else if (hit.transform.gameObject.tag.Equals("HealthTree") && !hit.transform.gameObject.GetComponent<HealthTreeController>().harvested)
+                {
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        hit.transform.gameObject.GetComponent<HealthTreeController>().HarvestTree();
+                    }
+                }
+                else if (hit.transform.gameObject.tag.Equals("Crater"))
+                {
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        hit.transform.gameObject.GetComponent<CraterController>().RemoveCrater();
+                    }
+                }
+                else if (hit.transform.gameObject.tag.Equals("Precious") && currentTool.Equals(Tool.AncientShield) &&
+                    this.GetComponent<PlayerStats>().CanPlaceShield())
+                {
+                    if (Input.GetButtonDown("Fire2"))
+                    {
+                        hit.transform.gameObject.GetComponent<AncientOneController>().EnableShield();
+                        this.GetComponent<PlayerStats>().PlaceShield();
+                        Debug.Log("Put a shield on the ancient one!!!");
+                    }
                 }
             }
-            else if (hit.transform.gameObject.tag.Equals("PasteMine") && !hit.transform.gameObject.GetComponent<PasteMineController>().harvested)
-            {
-                if (Input.GetButtonDown("Fire2"))
-                {
-                    hit.transform.gameObject.GetComponent<PasteMineController>().HarvestMine();
-                }
-            }
+        }
+        else
+        {
+            Destroy(temporaryPlacementObject);
         }
     }
 }
