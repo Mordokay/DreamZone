@@ -18,7 +18,7 @@ public class ShootController : MonoBehaviour {
     }
 
 	void Update () {
-        if (Input.GetButtonDown("Fire1") && !gm.GetComponent<UIManager>().pausedGame)
+        if (Input.GetButtonDown("Fire1") && !gm.GetComponent<UIManager>().pausedGame && player.GetComponent<PlayerStats>().CanShoot())
         {
             this.GetComponent<Animator>().SetTrigger("Shoot");
 

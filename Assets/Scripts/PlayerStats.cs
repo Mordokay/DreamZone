@@ -68,6 +68,11 @@ public class PlayerStats : MonoBehaviour {
         UpdateMaterialCosts();
     }
 
+    public bool CanShoot()
+    {
+        return dreamSpark >= 5;
+    }
+
     public void UpdateSliders()
     {
         sliderController.UpdateBars();

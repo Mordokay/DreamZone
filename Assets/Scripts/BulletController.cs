@@ -51,7 +51,6 @@ public class BulletController : MonoBehaviour {
         }
         else
         {
-            Debug.Log("hit something else");
             Destroy(this.gameObject);
         }
     }
