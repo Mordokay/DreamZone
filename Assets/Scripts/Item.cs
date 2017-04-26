@@ -39,12 +39,15 @@ public class Item : MonoBehaviour {
             {
                 case itemType.wood:
                     collision.gameObject.GetComponent<PlayerStats>().wood += quantity;
+                    collision.gameObject.GetComponent<PlayerStats>().UpdateMaterialCosts();
                     break;
                 case itemType.dreamJuice:
                     collision.gameObject.GetComponent<PlayerStats>().dreamSpark += quantity;
+                    collision.gameObject.GetComponent<PlayerStats>().UpdateMaterialCosts();
                     break;
                 case itemType.constructionPaste:
                     collision.gameObject.GetComponent<PlayerStats>().constructionPaste += quantity;
+                    collision.gameObject.GetComponent<PlayerStats>().UpdateMaterialCosts();
                     break;
                 case itemType.healthGlobe:
                     collision.gameObject.GetComponent<PlayerStats>().health += quantity;

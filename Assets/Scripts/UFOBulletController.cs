@@ -15,6 +15,8 @@ public class UFOBulletController : MonoBehaviour {
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            collision.gameObject.GetComponent<PlayerSoundManager>().PlayOutchSound();
+            collision.gameObject.GetComponent<PlayerStats>().takingDamage = true;
             collision.gameObject.GetComponent<PlayerStats>().LoseLife(5);
             Destroy(this.gameObject);
         }

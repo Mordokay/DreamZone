@@ -209,9 +209,9 @@ public class GameManager : MonoBehaviour
         new System.Random(map.GetComponent<MapTerrainGenerator>().seed);
         int X = gridWidth / 2;
         int Y = gridHeight / 2;
-        player.transform.localPosition = new Vector3(X, 2.0f, Y);
+        player.transform.localPosition = new Vector3(X + 1, 2.0f, Y);
         GameObject myPrecious = Instantiate(precious) as GameObject;
-        myPrecious.transform.localPosition = new Vector3(X + 1, 1.0f, Y + 1);
+        myPrecious.transform.localPosition = new Vector3(X, 1.0f, Y);
         for (int i = X - 2; i <= X + 2; i++)
         {
             for (int j = Y - 2; j <= Y + 2; j++)

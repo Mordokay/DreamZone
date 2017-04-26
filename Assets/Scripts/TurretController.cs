@@ -25,7 +25,7 @@ public class TurretController : MonoBehaviour {
 
 	void Start () {
 
-        bulletCount = 15;
+        bulletCount = 10;
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         timeSinceLastShoot = 0.0f;

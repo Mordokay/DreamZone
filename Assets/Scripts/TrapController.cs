@@ -16,6 +16,7 @@ public class TrapController : MonoBehaviour {
     {
         if (other.gameObject.tag.Equals("Player"))
         {
+            other.gameObject.GetComponent<PlayerStats>().takingDamage = true;
             player.GetComponent<PlayerStats>().health -= 30;
             player.GetComponent<PlayerSoundManager>().PlayOutchSound();
             Destroy(this.gameObject);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -31,20 +32,40 @@ public class PlayerStats : MonoBehaviour {
     public float refilTime;
     public float timeSinceLastRefill;
 
-	void Start () {
+    public bool takingDamage = false;
+    bool damageUp = true;
+    float maxRedDamage = 0.3f;
+    float currentRedDamage = 0.0f;
+
+    public Text woodTurret;
+    public Text sparkTurret;
+    public Text pasteTurret;
+
+    public Text woodTrap;
+    public Text sparkTrap;
+    public Text pasteTrap;
+
+    public Text woodShield;
+    public Text sparkShield;
+    public Text pasteShield;
+
+    void Start () {
+
         score = 0;
         highscore = PlayerPrefs.GetInt("highscore");
         highscoreText.text = "HIGHSCORE: " + highscore;
 
         gm = GameObject.FindGameObjectWithTag("GameManager");
 
-        wood = 500;
-        constructionPaste = 200;
+        wood = 300;
+        constructionPaste = 150;
         dreamSpark = 100;
 
         health = 100.0f;
 
         timeSinceLastRefill = 0.0f;
+
+        UpdateMaterialCosts();
     }
 
     public void UpdateSliders()
@@ -54,6 +75,33 @@ public class PlayerStats : MonoBehaviour {
 
     private void Update()
     {
+
+        if (takingDamage)
+        {
+            if (damageUp)
+            {
+                currentRedDamage += Time.deltaTime;
+                Camera.main.gameObject.GetComponent<EdgeDetection>().edgesOnly = currentRedDamage;
+
+                if(currentRedDamage >= maxRedDamage)
+                {
+                    currentRedDamage = maxRedDamage;
+                    damageUp = false;
+                }
+            }
+            else
+            {
+                currentRedDamage -= Time.deltaTime;
+                Camera.main.gameObject.GetComponent<EdgeDetection>().edgesOnly = currentRedDamage;
+                if (currentRedDamage < 0)
+                {
+                    currentRedDamage = 0.0f;
+                    takingDamage = false;
+                    damageUp = true;
+                }
+            }
+        }
+
         ClampItems();
 
         scoreText.text = "SCORE: " + score;
@@ -81,6 +129,7 @@ public class PlayerStats : MonoBehaviour {
             dreamSpark += 1;
 
             UpdateSliders();
+            UpdateMaterialCosts();
 
             timeSinceLastRefill = 0.0f;
         }
@@ -105,39 +154,125 @@ public class PlayerStats : MonoBehaviour {
         UpdateSliders();
     }
 
+    public void UpdateMaterialCosts()
+    {
+        if (constructionPaste < 50)
+        {
+            pasteTurret.color = Color.red;
+        }
+        else
+        {
+            pasteTurret.color = Color.white;
+        }
+        if (wood < 300) {
+            woodTurret.color = Color.red;
+        }
+        else
+        {
+            woodTurret.color = Color.white;
+        }
+        if ( dreamSpark < 5)
+        {
+            sparkTurret.color = Color.red;
+        }
+        else
+        {
+            sparkTurret.color = Color.white;
+        }
+
+        //////////////////////////////////////////////////////////////
+        if (constructionPaste < 10)
+        {
+            pasteTrap.color = Color.red;
+        }
+        else
+        {
+            pasteTrap.color = Color.white;
+        }
+        if (wood < 50)
+        {
+            woodTrap.color = Color.red;
+        }
+        else
+        {
+            woodTrap.color = Color.white;
+        }
+        if (dreamSpark < 5)
+        {
+            sparkTrap.color = Color.red;
+        }
+        else
+        {
+            sparkTrap.color = Color.white;
+        }
+
+        //////////////////////////////////////////////////////////////
+        if (constructionPaste < 250)
+        {
+            pasteShield.color = Color.red;
+        }
+        else
+        {
+            pasteShield.color = Color.white;
+        }
+        if (wood < 500)
+        {
+            woodShield.color = Color.red;
+        }
+        else
+        {
+            woodShield.color = Color.white;
+        }
+        if (dreamSpark < 50)
+        {
+            sparkShield.color = Color.red;
+        }
+        else
+        {
+            sparkShield.color = Color.white;
+        }
+    }
+
     //Turret functions
     public bool CanPlaceTurret()
     {
-        return (constructionPaste >= 50 && wood >= 300 && dreamSpark >= 5);
+        return (constructionPaste >= 50 && wood >= 200 && dreamSpark >= 20);
     }
     public void PlaceTurret()
     {
         constructionPaste -= 25;
-        wood -= 100;
-        dreamSpark -= 5;
+        wood -= 200;
+        dreamSpark -= 20;
+
+        UpdateMaterialCosts();
     }
 
-    //Turret functions
+    //Trap functions
     public bool CanPlaceTrap()
     {
-        return (constructionPaste >= 10 && wood >= 50);
+        return (constructionPaste >= 10 && wood >= 50 && dreamSpark >= 5);
     }
     public void PlaceTrap()
     {
         constructionPaste -= 10;
         wood -= 50;
+        dreamSpark -= 5;
+
+        UpdateMaterialCosts();
     }
 
     //Ancient Shield functions
     public bool CanPlaceShield()
     {
-        return (constructionPaste >= 250 && wood >= 300 && dreamSpark > 50);
+        return (constructionPaste >= 250 && wood >= 500 && dreamSpark > 50);
     }
     public void PlaceShield()
     {
         constructionPaste -= 250;
-        wood -= 300;
+        wood -= 500;
         dreamSpark -= 50;
+
+        UpdateMaterialCosts();
     }
 
     public void RemoveWood(int x)
